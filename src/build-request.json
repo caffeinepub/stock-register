@@ -1,107 +1,93 @@
 {
   "kind": "build_request",
-  "title": "Add monthly matrix (Days x Items) printable/exportable layout",
+  "title": "Add Internet Identity login page and gate app access",
   "projectName": "Stock Register",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-9",
-      "text": "Add a new monthly report layout option that arranges the selected month as a matrix where Days are rows and Items are columns, and each Item column expands into sub-columns: Opening Stock, Purchase, Total Quantity, Sales, Price, Closing Stock.",
+      "id": "REQ-13",
+      "text": "Create a dedicated login screen that allows users to sign in using Internet Identity before accessing the app.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-1"
         ],
         "quotes": [
-          "January month naa Items ellam column la irukkanum Days rows la irukkanum... Add Items opening stock purchase total sales price closing stock excel format la irukkanum"
+          "Website Ulla poga login page create pandriya"
         ]
       },
       "acceptanceCriteria": [
-        "A user can choose between the existing row-based layout and the new matrix layout for the selected month.",
-        "In matrix layout, the left-most column lists day numbers (1..daysInMonth for the selected year/month).",
-        "In matrix layout, each unique itemName in the selected month becomes a grouped set of 6 sub-columns: Opening Stock, Purchase, Total Quantity, Sales, Price, Closing Stock.",
-        "When a day+item has no data, the corresponding cells render as empty (not 0) in the matrix output.",
-        "The matrix layout uses English labels for headers (e.g., \"Opening Stock\", \"Purchase\", \"Total Quantity\", \"Sales\", \"Price\", \"Closing Stock\")."
+        "When the user is not authenticated, the app shows a full-page Login screen instead of the Stock Register UI.",
+        "Login screen has a clear primary action labeled in English (e.g., \"Sign in with Internet Identity\") that triggers Internet Identity login via the existing authentication hook.",
+        "Login screen shows a visible loading state while login is in progress and shows a readable error message if login fails (English text)."
       ]
     },
     {
-      "id": "REQ-10",
-      "text": "Update the print flow to support printing the selected month using the new matrix layout as a single print-ready document, including the month/year header (e.g., January 2026) and clean page breaks.",
+      "id": "REQ-14",
+      "text": "Gate the existing Stock Register UI behind authentication by updating the top-level app rendering to show the Login screen when no identity is present and show the existing StockRegisterPage only after successful authentication.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-1"
         ],
         "quotes": [
-          "January la 31 days irukkuna each day kum appadi panni whole aa 1 file aa printable format la venum"
+          "Website Ulla poga login page create pandriya"
         ]
       },
       "acceptanceCriteria": [
-        "Printing in matrix layout shows a header with the selected month name and year in English.",
-        "The printed output contains all days of the month (e.g., January shows 31 day rows) in one continuous print job.",
-        "The printed output applies print-friendly styling (legible font sizes, clear borders, repeated table headers on new pages if applicable, and no interactive controls)."
+        "After a successful Internet Identity login, the app automatically transitions from the Login screen to the existing Stock Register page without a manual refresh.",
+        "On page reload, if a valid stored identity exists, the app skips the Login screen and shows the Stock Register page.",
+        "No edits are made to immutable authentication hook files; changes are implemented by composing existing hooks/components."
       ]
     },
     {
-      "id": "REQ-11",
-      "text": "Update the export action to support exporting the selected month in the new matrix layout as an Excel-compatible download, with a filename that includes the selected month and year.",
+      "id": "REQ-15",
+      "text": "Add a logout control in the authenticated UI that clears the Internet Identity session and returns the user to the Login screen.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-1"
         ],
         "quotes": [
-          "whole aa 1 file aa printable format la venum idhae Madhiri each month in every year venum"
+          "Website Ulla poga login page create pandriya"
         ]
       },
       "acceptanceCriteria": [
-        "Export in matrix layout produces a file that opens in Excel (CSV is acceptable).",
-        "The exported file includes two header rows: (1) item names repeated across their 6 sub-columns and (2) the 6 sub-column names (Opening Stock, Purchase, Total Quantity, Sales, Price, Closing Stock).",
-        "The exported file includes one row per day for the entire selected month (1..daysInMonth).",
-        "The export filename includes the selected month name and year (e.g., \"Stock_Register_January_2026_...\"), and is in English."
+        "When authenticated, a visible logout control (English label, e.g., \"Logout\") is available in the app UI.",
+        "Clicking logout clears the identity using the existing authentication context and returns the user to the Login screen."
       ]
     },
     {
-      "id": "REQ-12",
-      "text": "Ensure the month/year navigation continues to drive the matrix output so the same matrix-style single-month printable/exportable file is available for any month in any year.",
-      "target": "frontend",
+      "id": "REQ-16",
+      "text": "Restrict backend write operations to authenticated callers by rejecting anonymous principals for add/update/remove operations.",
+      "target": "backend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-1"
         ],
         "quotes": [
-          "idhae Madhiri each month in every year venum"
+          "Website Ulla poga login page create pandriya"
         ]
       },
       "acceptanceCriteria": [
-        "Changing Year/Month in the existing navigator changes the matrix print/export to that month/year.",
-        "February correctly renders 28/29 day rows depending on the selected year.",
-        "The matrix layout uses the currently selected month filter even when Focus Day is set (matrix layout always renders the full month)."
+        "Calls to addStockItem/updateStockItem/removeStockItem from an anonymous caller are rejected with a clear trap/error message.",
+        "Calls from authenticated callers continue to work as before.",
+        "Query methods (getStockItem/getAllStockItems) remain callable (no new auth restriction) unless required by the existing actor patterns."
       ]
     }
   ],
   "constraints": [
-    "Do not edit files under frontend/src/components/ui (Shadcn components are read-only).",
-    "Do not edit immutable hook files: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx.",
-    "Keep all dates timezone-safe using existing YYYY-MM-DD string utilities (frontend/src/features/stock-register/dateUtils.ts)."
+    "Do not modify files in frontend/immutablePaths (e.g., frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui). Compose these modules from new/other components instead.",
+    "Backend must remain a single Motoko actor with logic in backend/main.mo; only add migration.mo if state schema/state handling changes (not required for auth checks alone).",
+    "Use English for any user-facing text added to the UI (labels, buttons, error messages)."
   ],
   "nonGoals": [
-    "Do not replace the existing row-based editable grid; the matrix layout is an additional layout option primarily for monthly print/export.",
-    "Do not add third-party spreadsheet libraries; keep export Excel-compatible using the existing CSV-based approach unless already present.",
-    "Do not introduce new backend services or databases; stay within the existing single-actor Motoko backend architecture."
+    "Do not add third-party authentication providers (only Internet Identity is allowed).",
+    "Do not implement role-based access control or admin/user permissions beyond basic authenticated vs anonymous gating.",
+    "Do not add routing/navigation overhaul unless required to show the login screen."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

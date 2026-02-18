@@ -1,13 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Add a new monthly “matrix” report layout (Days x Items) that can be printed as one document and exported as an Excel-compatible file.
+**Goal:** Add an Internet Identity login screen and require authentication before accessing the Stock Register app, with logout support and backend write protection.
 
 **Planned changes:**
-- Add a monthly layout selector to switch between the existing row-based layout and a new matrix layout for the selected month/year.
-- Implement the matrix layout rendering: day numbers (1..daysInMonth) as rows; each unique itemName as a grouped column header with 6 sub-columns (Opening Stock, Purchase, Total Quantity, Sales, Price, Closing Stock), using English labels and blank cells when no day+item data exists.
-- Update print flow for the matrix layout to produce a single print-ready document for the full month, with an English month/year header and print-friendly styling (including clean page breaks and repeated headers where applicable).
-- Update export flow to download an Excel-compatible file (CSV acceptable) for the matrix layout, including two header rows and a filename containing the selected English month and year.
-- Ensure existing month/year navigation drives the matrix output for any month/year (including correct 28/29 days for February) and that matrix layout always renders the full month regardless of any Focus Day setting.
+- Create a full-page Login screen with a primary “Sign in with Internet Identity” action using the existing authentication hook, plus loading and error states.
+- Update top-level app rendering to show the Login screen when no identity is present and show the existing Stock Register page after successful authentication (including auto-transition and session persistence on reload).
+- Add a visible “Logout” control in the authenticated UI that clears the Internet Identity session and returns to the Login screen.
+- Restrict backend write methods (add/update/remove) to authenticated callers by rejecting anonymous principals; keep query methods callable.
 
-**User-visible outcome:** Users can select a month and choose a new matrix-style monthly report to print as one continuous document and export as an Excel-compatible file, with day-by-day rows and item-by-item grouped columns.
+**User-visible outcome:** Users must sign in with Internet Identity to use the Stock Register UI; authenticated users can log out, and anonymous users cannot perform backend write operations.

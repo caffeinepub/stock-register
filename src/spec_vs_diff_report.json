@@ -1,31 +1,72 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-18T04:23:37.429Z",
-  "summary": "Diff implements the requested monthly matrix layout option, matrix table rendering with grouped sub-columns, print view support with month/year header and print styling, and CSV export with two header rows and month/year filename. One notable unrequested addition is a third-party xlsx library despite the stated non-goal to avoid spreadsheet libraries.",
+  "generatedAt": "2026-02-18T05:16:48.103Z",
+  "summary": "REQ-13/14/15 appear implemented via a new LoginScreen, top-level gating in App.tsx based on identity/initialization, and a logout handler in StockRegisterPage. REQ-16 is partially addressed by adding permission checks to write methods, but the backend implementation introduces broader role/access-control machinery beyond anonymous-only rejection and adds other unrequested authorization-gated APIs.",
   "missing_requirements": [],
   "hallucinated_features": [
     {
-      "description": "Added third-party spreadsheet library (xlsx / SheetJS) and related type declarations, despite non-goal to avoid third-party spreadsheet libraries and to keep export CSV-based.",
-      "reason": "BuildRequest explicitly says not to add third-party spreadsheet libraries; matrix export is already implemented via CSV and does not require xlsx.",
+      "description": "Introduced role-based access control (admin/user permissions) and authorization mixin/state beyond basic authenticated-vs-anonymous gating.",
+      "reason": "BuildRequest explicitly disallows role-based access control beyond basic authenticated vs anonymous gating; diff adds AccessControl, permissions, and admin checks.",
       "evidence": [
-        "frontend-file-summaries.txt (mentions: \"frontend/package.json\": \"xlsx library (SheetJS) added\" and \"frontend/src/types/xlsx.d.ts\")"
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Added new backend user profile APIs with authorization checks (getCallerUserProfile, getUserProfile, saveCallerUserProfile).",
+      "reason": "BuildRequest only requested restricting stock write operations for anonymous callers; user profile management was not requested.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Backend write operations now require a '#user' permission rather than only rejecting anonymous principals.",
+      "reason": "REQ-16 requires rejecting anonymous callers; the diff enforces a stronger permission model (hasPermission(..., #user)) that may reject authenticated callers lacking that permission, which is beyond the stated requirement.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Modified an immutable-path authentication hook file (useActor.ts) and added admin-token initialization behavior.",
+      "reason": "Constraints say not to modify files in frontend/immutablePaths (explicitly including frontend/src/hooks/useActor.ts). The diff modifies it and adds logic to read a secret token and call _initializeAccessControlWithSecret.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts"
+      ]
+    },
+    {
+      "description": "Added URL parameter/sessionStorage utilities (urlParams.ts), including handling of a 'caffeineAdminToken'.",
+      "reason": "Not requested by any requirement; appears tied to the new admin/access-control behavior.",
+      "evidence": [
+        "frontend/src/utils/urlParams.ts",
+        "frontend/src/hooks/useActor.ts"
+      ]
+    },
+    {
+      "description": "Added a 'caffeine.ai' promotional footer/link and non-English/emoji heart in the Login screen footer text.",
+      "reason": "Not requested in the BuildRequest; also the heart symbol is additional UI content outside the specified login requirements.",
+      "evidence": [
+        "frontend/src/features/auth/LoginScreen.tsx"
+      ]
+    },
+    {
+      "description": "Added/expanded Stock Register features unrelated to authentication (matrix layout, print/export enhancements, Tailwind/theme changes, xlsx dependency).",
+      "reason": "BuildRequest is focused on authentication gating and backend anonymous-write restriction; these broader UI/feature changes are unrequested.",
+      "evidence": [
+        "frontend-file-summaries.txt",
+        "frontend/package.json",
+        "frontend/src/features/stock-register/StockRegisterPage.tsx"
       ]
     }
   ],
   "confidence": 0.78,
   "changed_files": [
+    "backend/main.mo",
     "frontend-file-summaries.txt",
+    "frontend/src/App.tsx",
+    "frontend/src/features/auth/LoginScreen.tsx",
     "frontend/src/features/stock-register/StockRegisterPage.tsx",
-    "frontend/src/features/stock-register/components/DateNavigator.tsx",
-    "frontend/src/features/stock-register/components/RegisterActionsBar.tsx",
-    "frontend/src/features/stock-register/dateUtils.ts",
-    "frontend/src/features/stock-register/export/exportXlsx.ts",
-    "frontend/src/features/stock-register/monthlyMatrix/MonthlyMatrixTable.tsx",
-    "frontend/src/features/stock-register/monthlyMatrix/monthlyMatrix.ts",
-    "frontend/src/features/stock-register/print/PrintView.tsx",
-    "frontend/src/features/stock-register/types.ts",
-    "frontend/src/index.css",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/utils/urlParams.ts",
     "project_state.json"
   ]
 }

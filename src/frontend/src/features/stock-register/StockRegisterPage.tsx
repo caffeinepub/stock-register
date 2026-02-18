@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useInternetIdentity } from '../../hooks/useInternetIdentity';
 import { RegisterRow, ReportLayout } from './types';
 import { useRegisterFilters } from './state/useRegisterFilters';
 import { DateNavigator } from './components/DateNavigator';
@@ -11,8 +13,12 @@ import { calculateTotalQuantity, calculateClosingStock } from './gridMath';
 import { formatYMD, matchesYearMonth, matchesYearMonthDay, compareDateStrings } from './dateUtils';
 import { buildMonthlyMatrix, getUniqueItemNames } from './monthlyMatrix/monthlyMatrix';
 import { SiFacebook, SiX, SiLinkedin, SiInstagram } from 'react-icons/si';
+import { Button } from '@/components/ui/button';
+import { LogOut } from 'lucide-react';
 
 export function StockRegisterPage() {
+  const { clear } = useInternetIdentity();
+  const queryClient = useQueryClient();
   const { filters, setYear, setMonth, setFocusedDay } = useRegisterFilters();
   const [rows, setRows] = useState<RegisterRow[]>([]);
   const [isPrintMode, setIsPrintMode] = useState(false);
@@ -34,6 +40,13 @@ export function StockRegisterPage() {
   const matrixRows = [...monthRows].sort((a, b) => compareDateStrings(a.date, b.date));
   const matrix = layout === 'matrix' ? buildMonthlyMatrix(matrixRows, filters.year, filters.month) : [];
   const itemNames = layout === 'matrix' ? getUniqueItemNames(matrixRows) : [];
+
+  const handleLogout = async () => {
+    // Clear all cached data
+    queryClient.clear();
+    // Clear identity and return to login screen
+    await clear();
+  };
 
   const handleAddItem = () => {
     // Create date string directly from year/month/day without timezone conversion
@@ -177,8 +190,21 @@ export function StockRegisterPage() {
       {/* Header */}
       <header className="border-b bg-card">
         <div className="container mx-auto px-4 py-4">
-          <h1 className="text-2xl font-bold">Stock Register</h1>
-          <p className="text-sm text-muted-foreground">Daily inventory tracking and management</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold">Stock Register</h1>
+              <p className="text-sm text-muted-foreground">Daily inventory tracking and management</p>
+            </div>
+            <Button
+              onClick={handleLogout}
+              variant="outline"
+              size="sm"
+              className="gap-2"
+            >
+              <LogOut className="h-4 w-4" />
+              Logout
+            </Button>
+          </div>
         </div>
       </header>
 

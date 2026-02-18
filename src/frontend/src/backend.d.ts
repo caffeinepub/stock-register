@@ -14,10 +14,24 @@ export interface StockItem {
     quantity: bigint;
 }
 export type Time = bigint;
+export interface UserProfile {
+    name: string;
+}
+export enum UserRole {
+    admin = "admin",
+    user = "user",
+    guest = "guest"
+}
 export interface backendInterface {
     addStockItem(name: string, description: string, quantity: bigint): Promise<void>;
+    assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     getAllStockItems(): Promise<Array<StockItem>>;
+    getCallerUserProfile(): Promise<UserProfile | null>;
+    getCallerUserRole(): Promise<UserRole>;
     getStockItem(name: string): Promise<StockItem>;
+    getUserProfile(user: Principal): Promise<UserProfile | null>;
+    isCallerAdmin(): Promise<boolean>;
     removeStockItem(name: string): Promise<void>;
+    saveCallerUserProfile(profile: UserProfile): Promise<void>;
     updateStockItem(name: string, newQuantity: bigint): Promise<void>;
 }

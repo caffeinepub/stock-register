@@ -2,84 +2,59 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-add-a-new-monthly-report-layout-option-that-arranges-the-selected-month-as-a-matrix-where-days-are-rows-and-items-are-columns-and-each-item-column-expands-into-sub-columns-opening-stock-purchase-total-quantity-sales-price-closing-stock",
-      "featureTitle": "Add a new monthly report layout option that arranges the selected month as a matrix where Days are rows and Items are columns, and each Item column expands into sub-columns: Opening Stock, Purchase, Total Quantity, Sales, Price, Closing Stock.",
+      "featureId": "feature-create-a-dedicated-login-screen-that-allows-users-to-sign-in-using-internet-identity-before-accessing-the-app",
+      "featureTitle": "Create a dedicated login screen that allows users to sign in using Internet Identity before accessing the app.",
       "files": [
-        "frontend/src/features/stock-register/StockRegisterPage.tsx",
-        "frontend/src/features/stock-register/components/RegisterActionsBar.tsx",
-        "frontend/src/features/stock-register/monthlyMatrix/MonthlyMatrixTable.tsx",
-        "frontend/src/features/stock-register/monthlyMatrix/monthlyMatrix.ts",
-        "frontend/src/features/stock-register/types.ts"
+        "frontend/src/features/auth/LoginScreen.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
         "shadcn-ui@1.0.0",
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
       ],
       "testIds": [
-        "REQ-9"
+        "REQ-13"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-update-the-print-flow-to-support-printing-the-selected-month-using-the-new-matrix-layout-as-a-single-print-ready-document-including-the-month-year-header-e-g-january-2026-and-clean-page-breaks",
-      "featureTitle": "Update the print flow to support printing the selected month using the new matrix layout as a single print-ready document, including the month/year header (e.g., January 2026) and clean page breaks.",
+      "featureId": "feature-gate-the-existing-stock-register-ui-behind-authentication-by-updating-the-top-level-app-rendering-to-show-the-login-screen-when-no-identity-is-present-and-show-the-existing-stockregisterpage-only-after-successful-authentication",
+      "featureTitle": "Gate the existing Stock Register UI behind authentication by updating the top-level app rendering to show the Login screen when no identity is present and show the existing StockRegisterPage only after successful authentication.",
       "files": [
-        "frontend/src/features/stock-register/StockRegisterPage.tsx",
-        "frontend/src/features/stock-register/print/PrintView.tsx",
-        "frontend/src/index.css"
+        "frontend/src/App.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
         "shadcn-ui@1.0.0",
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
       ],
       "testIds": [
-        "REQ-10"
+        "REQ-14"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-update-the-export-action-to-support-exporting-the-selected-month-in-the-new-matrix-layout-as-an-excel-compatible-download-with-a-filename-that-includes-the-selected-month-and-year",
-      "featureTitle": "Update the export action to support exporting the selected month in the new matrix layout as an Excel-compatible download, with a filename that includes the selected month and year.",
+      "featureId": "feature-add-a-logout-control-in-the-authenticated-ui-that-clears-the-internet-identity-session-and-returns-the-user-to-the-login-screen",
+      "featureTitle": "Add a logout control in the authenticated UI that clears the Internet Identity session and returns the user to the Login screen.",
       "files": [
-        "frontend/src/features/stock-register/StockRegisterPage.tsx",
-        "frontend/src/features/stock-register/export/exportXlsx.ts",
-        "frontend/src/features/stock-register/monthlyMatrix/monthlyMatrix.ts"
+        "frontend/src/features/stock-register/StockRegisterPage.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
         "shadcn-ui@1.0.0",
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
       ],
       "testIds": [
-        "REQ-11"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-ensure-the-month-year-navigation-continues-to-drive-the-matrix-output-so-the-same-matrix-style-single-month-printable-exportable-file-is-available-for-any-month-in-any-year",
-      "featureTitle": "Ensure the month/year navigation continues to drive the matrix output so the same matrix-style single-month printable/exportable file is available for any month in any year.",
-      "files": [
-        "frontend/src/features/stock-register/StockRegisterPage.tsx",
-        "frontend/src/features/stock-register/components/DateNavigator.tsx",
-        "frontend/src/features/stock-register/monthlyMatrix/monthlyMatrix.ts"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-12"
+        "REQ-15"
       ],
       "confidence": "high"
     }
