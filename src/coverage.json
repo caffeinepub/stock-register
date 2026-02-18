@@ -1,0 +1,99 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-18T04:23:37.431Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 4,
+    "implemented": 4,
+    "items": [
+      {
+        "id": "REQ-10",
+        "summary": "Update the print flow to support printing the selected month using the new matrix layout as a single print-ready document, including the month/year header (e.g., January 2026) and clean page breaks.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/features/stock-register/print/PrintView.tsx",
+          "frontend/src/features/stock-register/StockRegisterPage.tsx",
+          "frontend/src/index.css"
+        ],
+        "matchedFiles": [
+          "frontend/src/features/stock-register/print/PrintView.tsx",
+          "frontend/src/features/stock-register/StockRegisterPage.tsx",
+          "frontend/src/index.css"
+        ]
+      },
+      {
+        "id": "REQ-11",
+        "summary": "Update the export action to support exporting the selected month in the new matrix layout as an Excel-compatible download, with a filename that includes the selected month and year.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/features/stock-register/export/exportXlsx.ts",
+          "frontend/src/features/stock-register/StockRegisterPage.tsx",
+          "frontend/src/features/stock-register/monthlyMatrix/monthlyMatrix.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/features/stock-register/export/exportXlsx.ts",
+          "frontend/src/features/stock-register/StockRegisterPage.tsx",
+          "frontend/src/features/stock-register/monthlyMatrix/monthlyMatrix.ts"
+        ]
+      },
+      {
+        "id": "REQ-12",
+        "summary": "Ensure the month/year navigation continues to drive the matrix output so the same matrix-style single-month printable/exportable file is available for any month in any year.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/features/stock-register/StockRegisterPage.tsx",
+          "frontend/src/features/stock-register/monthlyMatrix/monthlyMatrix.ts",
+          "frontend/src/features/stock-register/components/DateNavigator.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/features/stock-register/StockRegisterPage.tsx",
+          "frontend/src/features/stock-register/monthlyMatrix/monthlyMatrix.ts",
+          "frontend/src/features/stock-register/components/DateNavigator.tsx"
+        ]
+      },
+      {
+        "id": "REQ-9",
+        "summary": "Add a new monthly report layout option that arranges the selected month as a matrix where Days are rows and Items are columns, and each Item column expands into sub-columns: Opening Stock, Purchase, Total Quantity, Sales, Price, Closing Stock.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/features/stock-register/types.ts",
+          "frontend/src/features/stock-register/monthlyMatrix/monthlyMatrix.ts",
+          "frontend/src/features/stock-register/monthlyMatrix/MonthlyMatrixTable.tsx",
+          "frontend/src/features/stock-register/components/RegisterActionsBar.tsx",
+          "frontend/src/features/stock-register/StockRegisterPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/features/stock-register/types.ts",
+          "frontend/src/features/stock-register/monthlyMatrix/monthlyMatrix.ts",
+          "frontend/src/features/stock-register/monthlyMatrix/MonthlyMatrixTable.tsx",
+          "frontend/src/features/stock-register/components/RegisterActionsBar.tsx",
+          "frontend/src/features/stock-register/StockRegisterPage.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/features/stock-register/StockRegisterPage.tsx",
+    "frontend/src/features/stock-register/components/DateNavigator.tsx",
+    "frontend/src/features/stock-register/components/RegisterActionsBar.tsx",
+    "frontend/src/features/stock-register/dateUtils.ts",
+    "frontend/src/features/stock-register/export/exportXlsx.ts",
+    "frontend/src/features/stock-register/monthlyMatrix/MonthlyMatrixTable.tsx",
+    "frontend/src/features/stock-register/monthlyMatrix/monthlyMatrix.ts",
+    "frontend/src/features/stock-register/print/PrintView.tsx",
+    "frontend/src/features/stock-register/types.ts",
+    "frontend/src/index.css",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

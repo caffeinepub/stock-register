@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Neutral accounting palette - light mode */
+    --background: oklch(98% 0.002 240);
+    --foreground: oklch(20% 0.01 240);
+    --card: oklch(100% 0 0);
+    --card-foreground: oklch(20% 0.01 240);
+    --popover: oklch(100% 0 0);
+    --popover-foreground: oklch(20% 0.01 240);
+    --primary: oklch(35% 0.05 240);
+    --primary-foreground: oklch(98% 0.002 240);
+    --secondary: oklch(92% 0.01 240);
+    --secondary-foreground: oklch(20% 0.01 240);
+    --muted: oklch(94% 0.01 240);
+    --muted-foreground: oklch(50% 0.01 240);
+    --accent: oklch(92% 0.01 240);
+    --accent-foreground: oklch(20% 0.01 240);
+    --destructive: oklch(55% 0.18 25);
+    --destructive-foreground: oklch(98% 0.002 240);
+    --border: oklch(88% 0.01 240);
+    --input: oklch(88% 0.01 240);
+    --ring: oklch(35% 0.05 240);
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Neutral accounting palette - dark mode */
+    --background: oklch(15% 0.01 240);
+    --foreground: oklch(95% 0.002 240);
+    --card: oklch(18% 0.01 240);
+    --card-foreground: oklch(95% 0.002 240);
+    --popover: oklch(18% 0.01 240);
+    --popover-foreground: oklch(95% 0.002 240);
+    --primary: oklch(75% 0.05 240);
+    --primary-foreground: oklch(15% 0.01 240);
+    --secondary: oklch(25% 0.01 240);
+    --secondary-foreground: oklch(95% 0.002 240);
+    --muted: oklch(25% 0.01 240);
+    --muted-foreground: oklch(65% 0.01 240);
+    --accent: oklch(25% 0.01 240);
+    --accent-foreground: oklch(95% 0.002 240);
+    --destructive: oklch(55% 0.18 25);
+    --destructive-foreground: oklch(95% 0.002 240);
+    --border: oklch(30% 0.01 240);
+    --input: oklch(30% 0.01 240);
+    --ring: oklch(75% 0.05 240);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Print styles */
+@media print {
+  @page {
+    size: landscape;
+    margin: 0.5cm;
+  }
+
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .print-view {
+    padding: 0 !important;
+  }
+
+  /* Hide non-printable elements */
+  header,
+  footer,
+  button,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Ensure table headers repeat on each page */
+  thead {
+    display: table-header-group;
+  }
+
+  tbody {
+    display: table-row-group;
+  }
+
+  /* Prevent page breaks inside table rows */
+  tr {
+    page-break-inside: avoid;
+  }
+
+  /* Improve table styling for print */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    border: 1px solid #000 !important;
+    padding: 4px 8px !important;
+    font-size: 10px !important;
+  }
+
+  th {
+    background-color: #f0f0f0 !important;
+    font-weight: bold !important;
+  }
+
+  /* Ensure matrix table cells are readable */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Adjust font sizes for dense matrix tables */
+  .text-xs {
+    font-size: 8px !important;
+  }
+
+  .text-sm {
+    font-size: 9px !important;
+  }
+}

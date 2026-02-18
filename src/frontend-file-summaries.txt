@@ -1,0 +1,19 @@
+{
+  "frontend/src/App.tsx": "Main application entry point that renders the StockRegisterPage component.",
+  "frontend/src/features/stock-register/types.ts": "TypeScript type definitions for RegisterRow, RegisterFilters, and the new ReportLayout type ('row' | 'matrix') for switching between layout views.",
+  "frontend/src/features/stock-register/gridMath.ts": "Utility functions for calculating total quantity, closing stock, and formatting numbers consistently across the application.",
+  "frontend/src/features/stock-register/state/useRegisterFilters.ts": "Custom React hook managing year/month/day filter state with default values set to current date.",
+  "frontend/src/features/stock-register/components/DateNavigator.tsx": "Date navigation component refactored to use shared getDaysInMonth utility for consistent leap-year February handling across the application.",
+  "frontend/src/features/stock-register/components/RegisterActionsBar.tsx": "Action bar with Add Item, Print, Export buttons and new layout selector (Row vs Matrix) using shadcn Select component.",
+  "frontend/src/features/stock-register/components/StockRegisterGrid.tsx": "Excel-like editable table grid with timezone-safe date display formatting in print mode using the dateUtils helper functions.",
+  "frontend/src/features/stock-register/print/PrintView.tsx": "Print-optimized view supporting both row-based and matrix layouts with month/year header in English and clean print styling.",
+  "frontend/src/features/stock-register/export/exportXlsx.ts": "CSV export utility extended to support matrix layout with two header rows (item names + sub-columns), full month data export, and English month/year filenames.",
+  "frontend/src/features/stock-register/StockRegisterPage.tsx": "Main stock register page with layout state management, matrix/row view switching, full-month data handling for matrix print/export (ignoring Focus Day), and on-screen display of either editable grid or read-only matrix table.",
+  "frontend/src/index.css": "Global styles with neutral OKLCH color system and enhanced print media queries for matrix tables including repeated headers, page-break control, and legible font sizes for dense layouts.",
+  "frontend/tailwind.config.js": "Tailwind configuration with neutral color palette, custom fonts (Inter, JetBrains Mono), and extended design tokens.",
+  "frontend/package.json": "Package configuration with xlsx library (SheetJS) added for Excel export functionality.",
+  "frontend/src/types/xlsx.d.ts": "TypeScript type declaration file for the xlsx library providing interfaces for WorkBook, WorkSheet, and utility functions.",
+  "frontend/src/features/stock-register/dateUtils.ts": "Timezone-safe date utilities with added getDaysInMonth function for correct leap-year handling across navigation, matrix rendering, printing, and exporting.",
+  "frontend/src/features/stock-register/monthlyMatrix/monthlyMatrix.ts": "Matrix builder utilities that derive unique item columns, compute days in month, map (day, itemName) to values, and generate CSV rows with two-header structure for Excel export.",
+  "frontend/src/features/stock-register/monthlyMatrix/MonthlyMatrixTable.tsx": "Matrix table renderer using shadcn Table primitives displaying Day column plus grouped item columns with 6 English sub-headers (Opening Stock, Purchase, Total Quantity, Sales, Price, Closing Stock), rendering empty cells for missing data."
+}

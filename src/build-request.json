@@ -1,0 +1,107 @@
+{
+  "kind": "build_request",
+  "title": "Add monthly matrix (Days x Items) printable/exportable layout",
+  "projectName": "Stock Register",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-9",
+      "text": "Add a new monthly report layout option that arranges the selected month as a matrix where Days are rows and Items are columns, and each Item column expands into sub-columns: Opening Stock, Purchase, Total Quantity, Sales, Price, Closing Stock.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "January month naa Items ellam column la irukkanum Days rows la irukkanum... Add Items opening stock purchase total sales price closing stock excel format la irukkanum"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A user can choose between the existing row-based layout and the new matrix layout for the selected month.",
+        "In matrix layout, the left-most column lists day numbers (1..daysInMonth for the selected year/month).",
+        "In matrix layout, each unique itemName in the selected month becomes a grouped set of 6 sub-columns: Opening Stock, Purchase, Total Quantity, Sales, Price, Closing Stock.",
+        "When a day+item has no data, the corresponding cells render as empty (not 0) in the matrix output.",
+        "The matrix layout uses English labels for headers (e.g., \"Opening Stock\", \"Purchase\", \"Total Quantity\", \"Sales\", \"Price\", \"Closing Stock\")."
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Update the print flow to support printing the selected month using the new matrix layout as a single print-ready document, including the month/year header (e.g., January 2026) and clean page breaks.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "January la 31 days irukkuna each day kum appadi panni whole aa 1 file aa printable format la venum"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Printing in matrix layout shows a header with the selected month name and year in English.",
+        "The printed output contains all days of the month (e.g., January shows 31 day rows) in one continuous print job.",
+        "The printed output applies print-friendly styling (legible font sizes, clear borders, repeated table headers on new pages if applicable, and no interactive controls)."
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "text": "Update the export action to support exporting the selected month in the new matrix layout as an Excel-compatible download, with a filename that includes the selected month and year.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "whole aa 1 file aa printable format la venum idhae Madhiri each month in every year venum"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Export in matrix layout produces a file that opens in Excel (CSV is acceptable).",
+        "The exported file includes two header rows: (1) item names repeated across their 6 sub-columns and (2) the 6 sub-column names (Opening Stock, Purchase, Total Quantity, Sales, Price, Closing Stock).",
+        "The exported file includes one row per day for the entire selected month (1..daysInMonth).",
+        "The export filename includes the selected month name and year (e.g., \"Stock_Register_January_2026_...\"), and is in English."
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "text": "Ensure the month/year navigation continues to drive the matrix output so the same matrix-style single-month printable/exportable file is available for any month in any year.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "idhae Madhiri each month in every year venum"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Changing Year/Month in the existing navigator changes the matrix print/export to that month/year.",
+        "February correctly renders 28/29 day rows depending on the selected year.",
+        "The matrix layout uses the currently selected month filter even when Focus Day is set (matrix layout always renders the full month)."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not edit files under frontend/src/components/ui (Shadcn components are read-only).",
+    "Do not edit immutable hook files: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx.",
+    "Keep all dates timezone-safe using existing YYYY-MM-DD string utilities (frontend/src/features/stock-register/dateUtils.ts)."
+  ],
+  "nonGoals": [
+    "Do not replace the existing row-based editable grid; the matrix layout is an additional layout option primarily for monthly print/export.",
+    "Do not add third-party spreadsheet libraries; keep export Excel-compatible using the existing CSV-based approach unless already present.",
+    "Do not introduce new backend services or databases; stay within the existing single-actor Motoko backend architecture."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}

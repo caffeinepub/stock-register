@@ -1,0 +1,31 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-18T04:23:37.429Z",
+  "summary": "Diff implements the requested monthly matrix layout option, matrix table rendering with grouped sub-columns, print view support with month/year header and print styling, and CSV export with two header rows and month/year filename. One notable unrequested addition is a third-party xlsx library despite the stated non-goal to avoid spreadsheet libraries.",
+  "missing_requirements": [],
+  "hallucinated_features": [
+    {
+      "description": "Added third-party spreadsheet library (xlsx / SheetJS) and related type declarations, despite non-goal to avoid third-party spreadsheet libraries and to keep export CSV-based.",
+      "reason": "BuildRequest explicitly says not to add third-party spreadsheet libraries; matrix export is already implemented via CSV and does not require xlsx.",
+      "evidence": [
+        "frontend-file-summaries.txt (mentions: \"frontend/package.json\": \"xlsx library (SheetJS) added\" and \"frontend/src/types/xlsx.d.ts\")"
+      ]
+    }
+  ],
+  "confidence": 0.78,
+  "changed_files": [
+    "frontend-file-summaries.txt",
+    "frontend/src/features/stock-register/StockRegisterPage.tsx",
+    "frontend/src/features/stock-register/components/DateNavigator.tsx",
+    "frontend/src/features/stock-register/components/RegisterActionsBar.tsx",
+    "frontend/src/features/stock-register/dateUtils.ts",
+    "frontend/src/features/stock-register/export/exportXlsx.ts",
+    "frontend/src/features/stock-register/monthlyMatrix/MonthlyMatrixTable.tsx",
+    "frontend/src/features/stock-register/monthlyMatrix/monthlyMatrix.ts",
+    "frontend/src/features/stock-register/print/PrintView.tsx",
+    "frontend/src/features/stock-register/types.ts",
+    "frontend/src/index.css",
+    "project_state.json"
+  ]
+}

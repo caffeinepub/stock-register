@@ -1,0 +1,140 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 7,
+  "summary": "Create an Excel-based daily stock tracking template (for every day/month/year) with an Add Item button and printable report format.",
+  "architectural_notes": [
+    "User requires a month-wise printable sheet where each day is a row (1..31) and items appear in columns (pivoted layout), repeating for every month/year; include per-day columns: Opening Stock, Purchase, Total, Sales, Price, Closing Stock."
+  ],
+  "known_issues": [
+    "Add Item button is not working (user reported: \"Add item button work aagala\")."
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-create-a-stock-register-ui-that-works-like-an-excel-sheet-for-recording-daily-inventory-data-with-columns-date-item-opening-stock-purchase-total-quantity-sales-price-closing-stock",
+      "title": "Create a stock register UI that works like an Excel sheet for recording daily inventory data with columns: Date, Item, Opening Stock, Purchase, Total Quantity, Sales, Price, Closing Stock.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-provide-a-year-month-day-navigation-and-filtering-experience-so-users-can-view-and-edit-records-for-any-day-in-any-month-for-any-year",
+      "title": "Provide a Year/Month/Day navigation and filtering experience so users can view and edit records for any day in any month for any year.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-an-add-item-button-that-adds-a-new-item-row-for-the-currently-selected-date-or-allows-selecting-a-date-and-supports-adding-multiple-items-per-day",
+      "title": "Implement an “Add Item” button that adds a new item row for the currently selected date (or allows selecting a date) and supports adding multiple items per day.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-persist-stock-register-data-in-the-motoko-backend-keyed-by-year-month-day-and-item-with-crud-apis-used-by-the-frontend-via-react-query",
+      "title": "Persist stock register data in the Motoko backend keyed by year/month/day and item, with CRUD APIs used by the frontend via React Query.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-print-ready-layout-that-formats-the-selected-month-or-a-selected-date-range-into-a-clean-printable-report-with-proper-page-breaks-headers-and-a-compact-table",
+      "title": "Add a print-ready layout that formats the selected month (or a selected date range) into a clean, printable report with proper page breaks, headers, and a compact table.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-provide-an-export-to-excel-xlsx-action-that-downloads-the-currently-selected-month-or-selected-date-range-in-an-excel-compatible-file-with-the-same-columns-and-a-print-friendly-worksheet-layout",
+      "title": "Provide an “Export to Excel (.xlsx)” action that downloads the currently selected month (or selected date range) in an Excel-compatible file with the same columns and a print-friendly worksheet layout.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-coherent-visual-theme-and-typography-for-an-accounting-stock-register-style-interface-neutral-paper-like-palette-and-keep-it-consistent-across-the-register-view-print-preview-and-export-actions",
+      "title": "Apply a coherent visual theme and typography for an accounting/stock-register style interface (neutral, paper-like palette) and keep it consistent across the register view, print preview, and export actions.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-stock-register-add-item-flow-so-clicking-add-item-always-inserts-a-new-row-that-is-immediately-visible-in-the-grid-for-the-currently-selected-year-month-and-if-set-focus-day-without-being-affected-by-browser-timezone-utc-date-conversion-issues",
+      "title": "Fix the Stock Register “Add Item” flow so clicking “Add Item” always inserts a new row that is immediately visible in the grid for the currently selected Year/Month and (if set) Focus Day, without being affected by browser timezone/UTC date conversion issues.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-new-monthly-report-layout-option-that-arranges-the-selected-month-as-a-matrix-where-days-are-rows-and-items-are-columns-and-each-item-column-expands-into-sub-columns-opening-stock-purchase-total-quantity-sales-price-closing-stock",
+      "title": "Add a new monthly report layout option that arranges the selected month as a matrix where Days are rows and Items are columns, and each Item column expands into sub-columns: Opening Stock, Purchase, Total Quantity, Sales, Price, Closing Stock.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-print-flow-to-support-printing-the-selected-month-using-the-new-matrix-layout-as-a-single-print-ready-document-including-the-month-year-header-e-g-january-2026-and-clean-page-breaks",
+      "title": "Update the print flow to support printing the selected month using the new matrix layout as a single print-ready document, including the month/year header (e.g., January 2026) and clean page breaks.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-export-action-to-support-exporting-the-selected-month-in-the-new-matrix-layout-as-an-excel-compatible-download-with-a-filename-that-includes-the-selected-month-and-year",
+      "title": "Update the export action to support exporting the selected month in the new matrix layout as an Excel-compatible download, with a filename that includes the selected month and year.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-month-year-navigation-continues-to-drive-the-matrix-output-so-the-same-matrix-style-single-month-printable-exportable-file-is-available-for-any-month-in-any-year",
+      "title": "Ensure the month/year navigation continues to drive the matrix output so the same matrix-style single-month printable/exportable file is available for any month in any year.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Excel file template to record daily stock details (opening stock, purchase, total quantity, sales, price, closing stock) across every day/month/year",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Add Item button (macro/form) to add new stock items/rows easily in the Excel template",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Printable format/layout for the stock records (print-ready report view)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Support an alternate monthly layout where Days are rows and Items are columns, with per-day fields (Opening Stock, Purchase, Total, Sales, Price, Closing Stock) and a single-month printable view (e.g., January with 31 rows) repeated for every month/year",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Stock Register",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

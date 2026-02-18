@@ -1,0 +1,124 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Monthly matrix (Days x Items) layout for print and export",
+  "requirements": [
+    {
+      "id": "REQ-9",
+      "summary": "Add a selectable monthly matrix report layout (Days x Items with 6 sub-columns per item) alongside the existing row-based layout.",
+      "acceptanceCriteria": [
+        "A user can choose between the existing row-based layout and the new matrix layout for the selected month.",
+        "In matrix layout, the left-most column lists day numbers (1..daysInMonth for the selected year/month).",
+        "In matrix layout, each unique itemName in the selected month becomes a grouped set of 6 sub-columns: Opening Stock, Purchase, Total Quantity, Sales, Price, Closing Stock.",
+        "When a day+item has no data, the corresponding cells render as empty (not 0) in the matrix output.",
+        "The matrix layout uses English labels for headers (e.g., \"Opening Stock\", \"Purchase\", \"Total Quantity\", \"Sales\", \"Price\", \"Closing Stock\")."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/stock-register/types.ts",
+          "operation": "modify",
+          "description": "Add a report layout type (e.g., 'row' | 'matrix') that can be used by the page, print view, and export logic."
+        },
+        {
+          "path": "frontend/src/features/stock-register/monthlyMatrix/monthlyMatrix.ts",
+          "operation": "create",
+          "description": "Create month-scoped matrix builder utilities to: derive unique itemName columns for the selected month, compute daysInMonth, and map (day,itemName)->values for Opening Stock, Purchase, Total Quantity, Sales, Price, Closing Stock using timezone-safe YYYY-MM-DD parsing from existing dateUtils."
+        },
+        {
+          "path": "frontend/src/features/stock-register/monthlyMatrix/MonthlyMatrixTable.tsx",
+          "operation": "create",
+          "description": "Create a matrix table renderer using shadcn-ui Table primitives (Table, TableHeader, TableRow, TableHead, TableBody, TableCell) to display: Day column + grouped item columns with 6 English sub-headers; render missing day+item cells as empty strings. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/stock-register/components/RegisterActionsBar.tsx",
+          "operation": "modify",
+          "description": "Add a layout selector control (Row vs Matrix) to allow users to choose the monthly report layout used by Print/Export actions while keeping existing actions intact. Use existing shadcn-ui Button for actions and optionally shadcn-ui Select for layout selection. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/stock-register/StockRegisterPage.tsx",
+          "operation": "modify",
+          "description": "Track the selected report layout in page state; wire the layout selector in RegisterActionsBar; ensure the matrix layout uses month-scoped rows (ignoring Focus Day) when preparing matrix data for downstream Print/Export."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Support printing the selected month in the new matrix layout as a single print-ready document with month/year header and clean page breaks.",
+      "acceptanceCriteria": [
+        "Printing in matrix layout shows a header with the selected month name and year in English.",
+        "The printed output contains all days of the month (e.g., January shows 31 day rows) in one continuous print job.",
+        "The printed output applies print-friendly styling (legible font sizes, clear borders, repeated table headers on new pages if applicable, and no interactive controls)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/stock-register/print/PrintView.tsx",
+          "operation": "modify",
+          "description": "Extend PrintView to support rendering either the existing row-based StockRegisterGrid or the new MonthlyMatrixTable based on a layout prop; ensure the month/year header remains English and applies to both layouts."
+        },
+        {
+          "path": "frontend/src/features/stock-register/StockRegisterPage.tsx",
+          "operation": "modify",
+          "description": "Update the print flow to pass the selected layout into PrintView; when layout is matrix, pass month-scoped rows (full month) and render as a single print view document."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add/adjust print CSS to improve matrix printing: ensure table headers repeat across pages, keep rows from breaking awkwardly, ensure legible font sizes and clear borders for the denser matrix table, and ensure interactive controls remain hidden in print."
+        }
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "summary": "Support exporting the selected month in the new matrix layout as an Excel-compatible CSV download with month/year in the filename and two header rows.",
+      "acceptanceCriteria": [
+        "Export in matrix layout produces a file that opens in Excel (CSV is acceptable).",
+        "The exported file includes two header rows: (1) item names repeated across their 6 sub-columns and (2) the 6 sub-column names (Opening Stock, Purchase, Total Quantity, Sales, Price, Closing Stock).",
+        "The exported file includes one row per day for the entire selected month (1..daysInMonth).",
+        "The export filename includes the selected month name and year (e.g., \"Stock_Register_January_2026_...\"), and is in English."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/stock-register/export/exportXlsx.ts",
+          "operation": "modify",
+          "description": "Extend export logic to support a matrix-layout CSV export: generate two header rows (itemName grouped across 6 columns + sub-column labels), generate one row per day for the selected month, emit empty cells for missing day+item values (not 0), and generate an English filename including month and year."
+        },
+        {
+          "path": "frontend/src/features/stock-register/StockRegisterPage.tsx",
+          "operation": "modify",
+          "description": "Update the export action to use the selected layout; when matrix is selected, export the full month (ignoring Focus Day) with the month/year-based filename."
+        },
+        {
+          "path": "frontend/src/features/stock-register/monthlyMatrix/monthlyMatrix.ts",
+          "operation": "modify",
+          "description": "Add helper(s) for building matrix-shaped CSV rows (including day rows 1..daysInMonth and item column ordering) reused by export to ensure consistent empty-cell behavior and header generation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "summary": "Keep month/year navigation driving the matrix print/export output for any month/year, with correct days-in-month and matrix always rendering the full month even when Focus Day is set.",
+      "acceptanceCriteria": [
+        "Changing Year/Month in the existing navigator changes the matrix print/export to that month/year.",
+        "February correctly renders 28/29 day rows depending on the selected year.",
+        "The matrix layout uses the currently selected month filter even when Focus Day is set (matrix layout always renders the full month)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/stock-register/StockRegisterPage.tsx",
+          "operation": "modify",
+          "description": "Ensure matrix print/export derive data strictly from the selected year/month filters (not focusedDay); keep the existing grid behavior unchanged for on-screen editing while matrix output always uses the full month."
+        },
+        {
+          "path": "frontend/src/features/stock-register/monthlyMatrix/monthlyMatrix.ts",
+          "operation": "modify",
+          "description": "Ensure daysInMonth calculation is correct for all months including leap-year February; generate day rows 1..daysInMonth for the selected year/month."
+        },
+        {
+          "path": "frontend/src/features/stock-register/components/DateNavigator.tsx",
+          "operation": "modify",
+          "description": "Refactor days-in-month calculation to use a shared utility (or align with matrix/export utilities) so February 28/29 behavior is consistent across navigation, matrix rendering, printing, and exporting while staying timezone-safe."
+        }
+      ]
+    }
+  ]
+}

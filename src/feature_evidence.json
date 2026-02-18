@@ -1,0 +1,87 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-add-a-new-monthly-report-layout-option-that-arranges-the-selected-month-as-a-matrix-where-days-are-rows-and-items-are-columns-and-each-item-column-expands-into-sub-columns-opening-stock-purchase-total-quantity-sales-price-closing-stock",
+      "featureTitle": "Add a new monthly report layout option that arranges the selected month as a matrix where Days are rows and Items are columns, and each Item column expands into sub-columns: Opening Stock, Purchase, Total Quantity, Sales, Price, Closing Stock.",
+      "files": [
+        "frontend/src/features/stock-register/StockRegisterPage.tsx",
+        "frontend/src/features/stock-register/components/RegisterActionsBar.tsx",
+        "frontend/src/features/stock-register/monthlyMatrix/MonthlyMatrixTable.tsx",
+        "frontend/src/features/stock-register/monthlyMatrix/monthlyMatrix.ts",
+        "frontend/src/features/stock-register/types.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-print-flow-to-support-printing-the-selected-month-using-the-new-matrix-layout-as-a-single-print-ready-document-including-the-month-year-header-e-g-january-2026-and-clean-page-breaks",
+      "featureTitle": "Update the print flow to support printing the selected month using the new matrix layout as a single print-ready document, including the month/year header (e.g., January 2026) and clean page breaks.",
+      "files": [
+        "frontend/src/features/stock-register/StockRegisterPage.tsx",
+        "frontend/src/features/stock-register/print/PrintView.tsx",
+        "frontend/src/index.css"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-export-action-to-support-exporting-the-selected-month-in-the-new-matrix-layout-as-an-excel-compatible-download-with-a-filename-that-includes-the-selected-month-and-year",
+      "featureTitle": "Update the export action to support exporting the selected month in the new matrix layout as an Excel-compatible download, with a filename that includes the selected month and year.",
+      "files": [
+        "frontend/src/features/stock-register/StockRegisterPage.tsx",
+        "frontend/src/features/stock-register/export/exportXlsx.ts",
+        "frontend/src/features/stock-register/monthlyMatrix/monthlyMatrix.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-the-month-year-navigation-continues-to-drive-the-matrix-output-so-the-same-matrix-style-single-month-printable-exportable-file-is-available-for-any-month-in-any-year",
+      "featureTitle": "Ensure the month/year navigation continues to drive the matrix output so the same matrix-style single-month printable/exportable file is available for any month in any year.",
+      "files": [
+        "frontend/src/features/stock-register/StockRegisterPage.tsx",
+        "frontend/src/features/stock-register/components/DateNavigator.tsx",
+        "frontend/src/features/stock-register/monthlyMatrix/monthlyMatrix.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-12"
+      ],
+      "confidence": "high"
+    }
+  ]
+}
